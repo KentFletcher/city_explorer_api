@@ -16,13 +16,19 @@ app.get('/hello', (request, response) => {
 app.get('/location', (request, response) => {
   const geoData = require('./data/geo.json');
   const city = request.query.city;
-
   const display = new Location(city, geoData[0]);
-
-  //new var equal to the instance, pass this query to our constructor function, new Constructor (city and geoData)
   response.status(200).json(display);
 });
 
+app.get('/weather', (request, response) => {
+  const weatherData = require('./data/darksky.json');
+  const city = request.query.city;
+  const display = weather(city, weatherData);
+  response.status(200).json(display);
+});
+
+
+//construtor function for location
 function Location (city, geoData) {
   this.search_query = city;
   this.formatted_query = geoData.display_name;
@@ -30,6 +36,23 @@ function Location (city, geoData) {
   this.longitude = geoData.lon;
 }
 
+//constructor function for weather data
+function weather (city, weatherData) {
+//     this.forecast = weatherData.daily.data[0].summary;
+//     this.time = weatherData.daily.data[0]time;
+  const weatherArr = [];
+  let data = weatherData.daily.data;
+
+  data.forEach (day => {
+    const newObj = {};
+
+    newObj.forecast = day.summary;
+    newObj.time = new Date(day.time).toDateString();
+
+    weatherArr.push(newObj);
+  });
+  return weatherArr;
+}
 
 app.use('*', (request, response) => response.send('Sorry, that route does not exist.'));
 
