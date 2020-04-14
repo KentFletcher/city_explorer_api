@@ -58,12 +58,12 @@ Finish time: 1230
 Actual time needed to complete: 2hr
 ----------------------------------------------------------------
 
-Number and name of feature: ________________________________
+Number and name of feature: 3. Weather
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 1hr
 
-Start time: _____
+Start time: 1245
 
-Finish time: _____
+Finish time: 130
 
-Actual time needed to complete: _____
+Actual time needed to complete: 45min
