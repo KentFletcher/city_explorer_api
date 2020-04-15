@@ -2,11 +2,12 @@
 Lab 06-09: back-end
 
 **Author**: Kent Sheats
+
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
-We are building a stand-alone back end which will interact with a static front end. You will request data from a total of six third-party APIs, modify the data as needed, and send the data to the client to be displayed in the browser.
+We are building a stand-alone back end which will interact with a static front end, which was provided for us. We will request data from a total of six third-party APIs, modify the data as needed, and send the data to the client to be displayed in the browser.
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
@@ -22,18 +23,26 @@ We are building a stand-alone back end which will interact with a static front e
 
 ## Architecture
 <!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+- Languages used: Javascript
+- Libraries and frameworks: Node.js, Express
+- Deployment platform: Heroku
+- Repository Host: GitHub
+- APIs: LocationIQ, Weatherbit
 
 ## Change Log
 <!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
 
 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.
 -->
+04-14-2020 Set up repository and file structure, initial server set up, launched site via Heroku, built constructor functions for location and weather.
+
+04-15-2020 
 
 ## Credits and Collaborations
-Paul Depew
-Joseph Zabaleta
+- Paul Depew
+- Joseph Zabaleta
 ------------------------------------------------------------------
-Lab 06
+### Lab 06
 --------------------------------------------------------------------
 
 Number and name of feature: 1. Repository Set Up
@@ -67,3 +76,53 @@ Start time: 1245
 Finish time: 130
 
 Actual time needed to complete: 45min
+-------------------------------------------------------
+Number and name of feature: 4. Errors
+
+Estimate of time needed to complete: 1 hr
+
+Start time: 140
+
+Finish time: _____
+
+Actual time needed to complete: _____
+### Lab 07
+Number and name of feature: 1. Data formatting
+
+Estimate of time needed to complete: _____
+
+Start time: _____
+
+Finish time: _____
+
+Actual time needed to complete: _____
+----------------------------------------------------
+Number and name of feature: 2. Locations
+
+Estimate of time needed to complete: _____
+
+Start time: _____
+
+Finish time: _____
+
+Actual time needed to complete: _____
+---------------------------------------------------------------
+Number and name of feature: 3. Weather
+
+Estimate of time needed to complete: _____
+
+Start time: _____
+
+Finish time: _____
+
+Actual time needed to complete: _____
+----------------------------------------------------------
+Number and name of feature: 4. Trails
+
+Estimate of time needed to complete: _____
+
+Start time: _____
+
+Finish time: _____
+
+Actual time needed to complete: _____

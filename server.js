@@ -21,14 +21,19 @@ app.get('/location', (request, response) => {
 });
 
 app.get('/weather', (request, response) => {
-  const weatherData = require('./data/darksky.json');
-  const city = request.query.city;
-  const display = weather(city, weatherData);
-  response.status(200).json(display);
+  const weather = require('./data/darksky.json');
+  const weatherArray = weather.daily.data;
+//   const display = weather(city, weatherData);
+//   response.status(200).json(display);
+
+  const finalWeatherArray = weatherArray.map(day => {
+      return new Weather(day);
+  })
+  response.send(finalWeatherArray);
 });
 
 
-//construtor function for location
+//constructor function for location
 function Location (city, geoData) {
   this.search_query = city;
   this.formatted_query = geoData.display_name;
@@ -37,24 +42,31 @@ function Location (city, geoData) {
 }
 
 //constructor function for weather data
-function weather (city, weatherData) {
-//     this.forecast = weatherData.daily.data[0].summary;
-//     this.time = weatherData.daily.data[0]time;
-  const weatherArr = [];
-  let data = weatherData.daily.data;
+// function weather (city, weatherData) {
+// //     this.forecast = weatherData.daily.data[0].summary;
+// //     this.time = weatherData.daily.data[0]time;
+//   const weatherArr = [];
+//   let data = weatherData.daily.data;
 
-  data.forEach (day => {
-    const newObj = {};
+//   data.forEach (day => {
+//     const newObj = {};
 
-    newObj.forecast = day.summary;
-    newObj.time = new Date(day.time).toDateString();
+//     newObj.forecast = day.summary;
+//     newObj.time = new Date(day.time).toDateString();
 
-    weatherArr.push(newObj);
-  });
-  return weatherArr;
+//     weatherArr.push(newObj);
+//   });
+//   return weatherArr;
+// }
+
+function Weather(obj){
+    this.forecast = obj.summary;
+    this.time = new Date(obj.time * 1000).toDateString();
 }
 
 app.use('*', (request, response) => response.send('Sorry, that route does not exist.'));
+
+
 
 app.listen (PORT, () => {
   console.log('App is running on PORT: ' + PORT);
