@@ -41,6 +41,7 @@ We are building a stand-alone back end which will interact with a static front e
 ## Credits and Collaborations
 - Paul Depew
 - Joseph Zabaleta
+- Robert Carter 
 ------------------------------------------------------------------
 ### Lab 06
 --------------------------------------------------------------------
@@ -89,23 +90,23 @@ Actual time needed to complete: _____
 ### Lab 07
 Number and name of feature: 1. Data formatting
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 30min
 
-Start time: _____
+Start time: 915
 
-Finish time: _____
+Finish time: 930
 
-Actual time needed to complete: _____
+Actual time needed to complete: 15min
 ----------------------------------------------------
 Number and name of feature: 2. Locations
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 1.5hrs
 
-Start time: _____
+Start time: 930
 
-Finish time: _____
+Finish time: 1130
 
-Actual time needed to complete: _____
+Actual time needed to complete: 2hr
 ---------------------------------------------------------------
 Number and name of feature: 3. Weather
 
