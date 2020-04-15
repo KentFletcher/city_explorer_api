@@ -37,16 +37,30 @@ app.get('/location', (request, response) => {
 
 
 app.get('/weather', (request, response) => {
-  const weather = require('./data/darksky.json');
-  const weatherArray = weather.daily.data;
+//   const weather = require('./data/darksky.json');
+//   const weatherArray = weather.daily.data;
   //   const display = weather(city, weatherData);
   //   response.status(200).json(display);
+  const { latitude, longitude } = request.query;
+  const key = process.env.WEATHER_API_KEY;
+  const url = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${key}`;
 
-  const finalWeatherArray = weatherArray.map(day => {
-    return new Weather(day);
-  });
-  response.send(finalWeatherArray);
+  superagent.get(url)
+    .then(weatherResponse => {
+      const data = weatherResponse.body.data;
+      const result = [];
+      data.forEach(item => {
+        result.push(new Weather(item.datetime, item.weather.description));
+      });
+      //   console.log(result);
+      response.send(result);
+    }).catch(error => handleError(error,response));
 });
+//   const finalWeatherArray = weatherArray.map(day => {
+//     return new Weather(day);
+//   });
+//   response.send(finalWeatherArray);
+
 
 
 //constructor function for location
@@ -75,16 +89,13 @@ function Location (city, geoData) {
 //   return weatherArr;
 // }
 
-function Weather(obj){
-  this.forecast = obj.summary;
-  this.time = new Date(obj.time * 1000).toDateString();
+function Weather(date, forecast){
+  this.forecast = forecast;
+  this.time = new Date(date).toDateString();
 }
 
-function handleError(error, request, response) {
-  response.status(500).send({
-    status: 500,
-    responseText: 'Sorry, something went wrong',
-  });
+function handleError(error, response) {
+  if (response) response.status.send('Sorry, something went wrong');
 }
 
 app.use('*', (request, response) => response.send('Sorry, that route does not exist.'));
