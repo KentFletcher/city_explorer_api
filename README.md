@@ -27,7 +27,7 @@ We are building a stand-alone back end which will interact with a static front e
 - Libraries and frameworks: Node.js, Express
 - Deployment platform: Heroku
 - Repository Host: GitHub
-- APIs: LocationIQ, Weatherbit
+- APIs: LocationIQ, Weatherbit, REI TRAILS, 
 
 ## Change Log
 <!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
@@ -86,7 +86,7 @@ Start time: 140
 
 Finish time: _____
 
-Actual time needed to complete: _____
+Actual time needed to complete: 20min
 ### Lab 07
 Number and name of feature: 1. Data formatting
 
@@ -104,26 +104,26 @@ Estimate of time needed to complete: 1.5hrs
 
 Start time: 930
 
-Finish time: 1130
+Finish time: 1200
 
-Actual time needed to complete: 2hr
+Actual time needed to complete: 2.5hr
 ---------------------------------------------------------------
 Number and name of feature: 3. Weather
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 1HR
 
-Start time: _____
+Start time: 12
 
-Finish time: _____
+Finish time: 115
 
-Actual time needed to complete: _____
+Actual time needed to complete: 115hr
 ----------------------------------------------------------
 Number and name of feature: 4. Trails
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 1.5 hrs
 
-Start time: _____
+Start time: 7   
 
-Finish time: _____
+Finish time: 830
 
-Actual time needed to complete: _____
+Actual time needed to complete: 1.5 hrs
