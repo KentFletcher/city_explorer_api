@@ -18,39 +18,56 @@ dbClient.on('error', err => console.log(err));
 
 app.use(cors());
 
-app.get('/hello', (request, response) => {
-  response.status(200).send('Hello');
-});
+app.get('/location', handleLocation);
 
-app.get('/location', (request, response) => {
+function handleLocation (request, response) {
   const city = request.query.city;
   const key = process.env.GEOCODE_API_KEY;
-  const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${city}&format=json`;
+  const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${city}&format=json&limit=1`;
 
-//check if the city exists in my database, if the search query matches anything in my search column that i created.  Then return that entire id
+  //check if the city exists in my database, if the search query matches anything in my search column that i created.  Then return that entire id
 
-//SELECT search_query from locations
+  //SELECT search_query from locations
+  const sql =`SELECT * FROM locations WHERE search_query=$1;`;
+  const safeValues = [city];
+  //   console.log('searchValue city', city);
+  
+  //if not then run the api call, but before the response, insert into the database so i have it for the next time.
+  //INSERT statement: not going to insert an id because it is auto generated.  What we need are the other 4 properties
+  //`INSERT INTO(search_query, formatted_query, latitude, longitude) VALUES($1, $2, $3, $4) RETURNING id;`;
+  //variable saveValues =[search_query, formatted_query, latitude, longitude]
+  //client.query(sql, saveValues).then for superagent
 
-//if not then run the api call, but before the response, insert into the database so i have it for the next time.
-//INSERT statement: not going to insert an id because it is auto generated.  What we need are the other 4 properties
-//`INSERT INTO(search_query, formatted_query, latitude, longitude) VALUES($1, $2, $3, $4) RETURNING id;`;
-//variable saveValues =[search_query, formatted_query, latitude, longitude]
-//client.query(sql, saveValues).then for superagent
+  dbClient.query(sql, safeValues)
+    .then(results => {
+      if (results.rows[0]){
+        response.send(results.rows[0]);
+      } else {
+        // console.log('else11111111111');
+        superagent.get(url)
+          .then(results => {
+            let geoData = results.body[0];
+            let location = new Location(city, geoData);
 
-  superagent.get(url)
-    .then(locationResponse => {
-      const data = locationResponse.body;
-      for (var i in data) {
-        if (data[i].display_name.search(city)) {
-          const display = new Location(city, data[i]);
-          response.send(display);
-        }
+            response.status(200).send(location);
+
+            const insertSQL = `INSERT INTO locations (search_query, formatted_query, latitude, longitude) VALUES ($1, $2, $3, $4);`;
+            const searchValues = [city, location.formatted_query, location.latitude, location.longitude];
+            dbClient.query(insertSQL, searchValues);
+            
+            // for (var i in data) {
+            //   if (data[i].display_name.search(city)) {
+            //     const display = new Location(city, data[i]);
+            //     response.send(display);
+            //   }
+            // }
+          })
+          .catch(error => {
+            handleError(error, request, response);
+          });
       }
-    })
-    .catch(error => {
-      handleError(error, request, response);
     });
-});
+}
 
 
 app.get('/weather', (request, response) => {
@@ -116,14 +133,14 @@ function Trails (trail) {
 
 
 
-function handleError(error, request, response, next) {
+function handleError(error, request, response) {
   console.log(error);
   response.status(500).send({status:500, responseText:'Sorry, something went wrong'});
 }
 
 app.use('*', (request, response) => response.send('Sorry, that route does not exist.'));
 
-//Starts server listening for requests
+//Starts server listening for requests for database and server
 dbClient.connect()
   .then(() => {
     app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
