@@ -136,23 +136,45 @@ Estimate of time needed to complete: 1hr
 
 Start time: 930
 
-Finish time: _____
+Finish time: 1030
 
-Actual time needed to complete: _____
+Actual time needed to complete: 1
 -----------------------------------------------------------
 Number and name of feature: 2. Server
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 2hr
 
-Start time: _____
+Start time: 1030
 
-Finish time: _____
+Finish time: ?
 
-Actual time needed to complete: _____
+Actual time needed to complete: 5+hrs
 ------------------------------------------------------------
 Number and name of feature: 3. Deploy
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 30min
+
+Start time: 1
+
+Finish time: 2
+
+Actual time needed to complete: 1 hr
+------------------------------------------------------------
+### Lab 09
+------------------------------------------------------------
+Number and name of feature: 1. Movies
+
+Estimate of time needed to complete: 1.5 hours  
+
+Start time: 230
+
+Finish time: _____
+
+Actual time needed to complete: _____
+------------------------------------------------------------
+Number and name of feature: 2. Yelp
+
+Estimate of time needed to complete: 1.5 hrs
 
 Start time: _____
 
@@ -160,9 +182,9 @@ Finish time: _____
 
 Actual time needed to complete: _____
 ------------------------------------------------------------
-Number and name of feature: ________________________________
+Number and name of feature: 3. Refactor
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 1hr
 
 Start time: _____
 
