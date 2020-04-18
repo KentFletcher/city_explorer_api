@@ -31,7 +31,7 @@ function handleLocation (request, response) {
   const sql =`SELECT * FROM locations WHERE search_query=$1;`;
   const safeValues = [city];
   //   console.log('searchValue city', city);
-  
+
   //if not then run the api call, but before the response, insert into the database so i have it for the next time.
   //INSERT statement: not going to insert an id because it is auto generated.  What we need are the other 4 properties
   //`INSERT INTO(search_query, formatted_query, latitude, longitude) VALUES($1, $2, $3, $4) RETURNING id;`;
@@ -54,7 +54,7 @@ function handleLocation (request, response) {
             const insertSQL = `INSERT INTO locations (search_query, formatted_query, latitude, longitude) VALUES ($1, $2, $3, $4);`;
             const searchValues = [city, location.formatted_query, location.latitude, location.longitude];
             dbClient.query(insertSQL, searchValues);
-            
+
             // for (var i in data) {
             //   if (data[i].display_name.search(city)) {
             //     const display = new Location(city, data[i]);
@@ -88,6 +88,8 @@ app.get('/weather', (request, response) => {
     .catch(error => handleError(error, request, response));
 });
 
+
+
 app.get('/trails', (request, response) => {
   const {latitude, longitude} = request.query;
   const key = process.env.TRAIL_API_KEY;
@@ -101,6 +103,24 @@ app.get('/trails', (request, response) => {
       }));
     }).catch(error => handleError(error, request, response));
 });
+
+
+
+app.get('/movies', (request, response) => {
+  const city = request.query.search_query;
+  const key = process.env.MOVIE_API_KEY;
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${city}`;
+
+  superagent.get(url)
+    .then(movieResponse => {
+      const data = movieResponse.body.results;
+      //   console.log('movie superagent', data);
+      response.send(data.map(element => {
+        return new Movie(element);
+      }));
+    }).catch(error => handleError(error, request, response));
+});
+
 
 
 //constructor function for Location
@@ -131,7 +151,15 @@ function Trails (trail) {
   this.condition_time = trail.conditionTime;
 }
 
-
+function Movie (movie) {
+  this.title = movie.title;
+  this.overview = movie.overview;
+  this.average_votes = movie.average_votes;
+  this.total_votes = movie.total_votes;
+  this.image_url = `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`;
+  this.popularity = movie.popularity;
+  this.released_on = movie.released_on;
+}
 
 function handleError(error, request, response) {
   console.log(error);
