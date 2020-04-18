@@ -3,12 +3,18 @@
 require('dotenv').config();
 const express = require('express');
 const superagent = require('superagent');
+const pg = require('pg');
 const cors = require('cors');
 
 //initiates express and an object
 const app = express();
-
 const PORT = process.env.PORT || 3001;
+
+//Database Setup
+const dbClient = new pg.Client(process.env.DATABASE_URL);
+
+
+dbClient.on('error', err => console.log(err));
 
 app.use(cors());
 
@@ -20,6 +26,16 @@ app.get('/location', (request, response) => {
   const city = request.query.city;
   const key = process.env.GEOCODE_API_KEY;
   const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${city}&format=json`;
+
+//check if the city exists in my database, if the search query matches anything in my search column that i created.  Then return that entire id
+
+//SELECT search_query from locations
+
+//if not then run the api call, but before the response, insert into the database so i have it for the next time.
+//INSERT statement: not going to insert an id because it is auto generated.  What we need are the other 4 properties
+//`INSERT INTO(search_query, formatted_query, latitude, longitude) VALUES($1, $2, $3, $4) RETURNING id;`;
+//variable saveValues =[search_query, formatted_query, latitude, longitude]
+//client.query(sql, saveValues).then for superagent
 
   superagent.get(url)
     .then(locationResponse => {
@@ -108,6 +124,7 @@ function handleError(error, request, response, next) {
 app.use('*', (request, response) => response.send('Sorry, that route does not exist.'));
 
 //Starts server listening for requests
-app.listen (PORT, () => {
-  console.log('App is running on PORT: ' + PORT);
-});
+dbClient.connect()
+  .then(() => {
+    app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+  });
