@@ -121,7 +121,22 @@ app.get('/movies', (request, response) => {
     }).catch(error => handleError(error, request, response));
 });
 
+app.get('/yelp', (request, response) => {
+  const city = request.query.city;
+  const url = `http://api.yelp.com/v3/businesses/search?location=${city}&term=restaurants`;
 
+  superagent.get(url)
+    .set({
+      "Authorization": `Bearer ${process.env.YELP_API_KEY}`
+    })
+    .then(businessResponse => {
+      const data = businessResponse.body.businesses;
+      //   console.log('movie superagent', data);
+      response.send(data.map(element => {
+        return new Business(element);
+      }));
+    }).catch(error => handleError(error, request, response));
+});
 
 //constructor function for Location
 function Location (city, geoData) {
@@ -151,16 +166,28 @@ function Trails (trail) {
   this.condition_time = trail.conditionTime;
 }
 
+//constructor function for Movies
 function Movie (movie) {
   this.title = movie.title;
   this.overview = movie.overview;
   this.average_votes = movie.average_votes;
   this.total_votes = movie.total_votes;
-  this.image_url = `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`;
+  this.image_url = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
   this.popularity = movie.popularity;
   this.released_on = movie.released_on;
 }
 
+//constructor function for YELP
+function Business (data) {
+  this.name = data.name;
+  this.image_url = data.image_url;
+  this.price = data.price;
+  this.rating = data.rating;
+  this.url = data.url;
+}
+
+
+//function to handle any errors
 function handleError(error, request, response) {
   console.log(error);
   response.status(500).send({status:500, responseText:'Sorry, something went wrong'});
