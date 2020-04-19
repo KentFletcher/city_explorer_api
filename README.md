@@ -168,15 +168,15 @@ Estimate of time needed to complete: 1.5 hours
 
 Start time: 230
 
-Finish time: _____
+Finish time: 4
 
-Actual time needed to complete: _____
+Actual time needed to complete: 1.5 HRS
 ------------------------------------------------------------
 Number and name of feature: 2. Yelp
 
 Estimate of time needed to complete: 1.5 hrs
 
-Start time: _____
+Start time: 445
 
 Finish time: _____
 
